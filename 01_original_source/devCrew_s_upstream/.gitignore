@@ -1,0 +1,26 @@
+## Terraform ##
+*.tfvars
+# Compiled files
+*.tfstate*
+# Module directory
+.terraform/
+
+## Go ##
+vendor/
+*.zip
+dist/
+release/
+.DS_Store
+*/.DS_Store
+/.vscode
+
+## Python ##
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+*.egg-info/
+dist/
+build/
+*.egg

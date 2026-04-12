@@ -14,3 +14,5 @@ desktop.ini
 # Optional: local logs or exports you don't want tracked
 08_exports/*.zip
 08_exports/*.pdf
+
+01_original_source/devCrew_s_upstream/tools/secrets_scanner/test_secrets.py
