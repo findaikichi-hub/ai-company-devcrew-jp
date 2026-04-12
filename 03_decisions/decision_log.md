@@ -1,4 +1,4 @@
-﻿# decision_log
+# decision_log
 
 このファイルには、設計変更の理由を記録する。
 
