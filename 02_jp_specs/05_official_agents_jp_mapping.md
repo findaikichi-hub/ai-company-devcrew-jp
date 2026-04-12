@@ -1,195 +1,160 @@
 ﻿# 05_official_agents_jp_mapping
 
 ## 目的
-本ファイルは、本家 DevCrew_s の公式エージェント群を、
-日本版プロジェクトの観点で一覧化し、初期優先度と扱い方を整理するための対応表である。
+本家 DevCrew_s のエージェント構造を、日本版として再編する。
 
-## 前提
-- 本家の公式エージェント一覧を参照する
-- 本家は参照原本であり、日本版では単純翻訳ではなく再編・再設計を行う
-- 初期は横断型テンプレートを優先する
-- すべてを一度に日本版化しない
+本ファイルでは、以下の2軸で整理する。
 
----
+- 役割再編（Role Recomposition）
+- 機能接続（Function / Protocol Integration）
 
-## 1. 判定区分
-
-- 初期優先:
-  日本版の初期スコープに直接つながるため、早めに再編対象とする
-- 参照維持:
-  重要ではあるが、初期は本家参照中心でよい
-- 後段候補:
-  日本版の第2段階以降で検討する
+単純な1対1マッピングは行わない。
 
 ---
 
-## 2. 本家公式エージェント一覧と日本版での扱い
+## 1. 前提（本家整合）
 
-| 本家エージェント | 本家の主な役割 | 日本版での扱い | 初期優先度 | 日本版での見立て |
-|---|---|---|---|---|
-| ADR-Writer | アーキテクチャ判断記録 | 参照維持 | 中 | decision_log や設計判断整理に接続しやすい |
-| ASR-Writer | 要件分析 | 参照維持 | 中 | 要件整理テンプレートに発展余地あり |
-| Backend-Engineer | サーバー側開発 | 後段候補 | 低 | 初期の横断型業務テンプレからは距離がある |
-| Blueprint-Writer | 実装計画 | 参照維持 | 中 | 実務テンプレ設計時の構造参照に有効 |
-| Business-Analyst | 分析・示唆抽出 | 初期優先 | 高 | 社内分析、改善提案、業務整理に接続しやすい |
-| Cloud-Architect | クラウド設計 | 後段候補 | 低 | 初期スコープでは優先度を下げる |
-| Code-Reviewer | コード品質・レビュー | 後段候補 | 低 | 日本版初期の業務テンプレ中心方針とは少しずれる |
-| Context-Manager | 記憶・知識管理 | 初期優先 | 高 | 劣化対策、共有記憶、引き継ぎ文化の核になる |
-| Debugger | 原因調査・復旧 | 参照維持 | 中 | 障害対応テンプレや失敗記録に接続可能 |
-| DevOps-Engineer | CI/CD・運用自動化 | 後段候補 | 低 | 初期は仕様整備を優先する |
-| Frontend-Engineer | クライアント側開発 | 後段候補 | 低 | 初期の日本版テーマとは距離がある |
-| Orchestrator | 全体調整・委任管理 | 初期優先 | 高 | AI社員群の連携設計の中核になる |
-| Performance-Engineer | 性能最適化 | 後段候補 | 低 | 早期価値よりも後段の最適化領域 |
-| Product-Owner | 優先順位・価値判断 | 初期優先 | 高 | PMO や業務テンプレ設計に接続しやすい |
-| Project-Manager | 進行管理・調整 | 初期優先 | 高 | 日本版 PMO / プロジェクト管理AI の直接土台 |
-| QA-Tester | テスト・品質保証 | 参照維持 | 中 | 品質確認やテンプレ評価軸に転用可能 |
-| Security-Auditor | セキュリティ評価 | 参照維持 | 中 | 個人情報・監査・統制の観点で重要 |
-| SRE | 信頼性運用 | 後段候補 | 低 | 初期は汎用業務テンプレ優先 |
-| System-Architect | 全体設計統制 | 初期優先 | 高 | 日本版の共通仕様設計の中核参照になる |
-| UX-UI-Designer | 体験設計 | 参照維持 | 中 | 対人配慮、出力設計、業務体験に活かせる |
+本家は以下の4レイヤーで構成される。
+
+- Agent: 役割定義
+- Protocol: 標準化された手順
+- Human: 方針判断・例外承認・HITL
+- Artifact: handoff / task_packet / validation_report 等
+
+日本版でもこの構造を維持する。
 
 ---
 
-## 3. 日本版の初期優先エージェント群
+## 2. 日本版の役割再編
 
-### 3-1. 最優先で参照すべきもの
-- Project-Manager
-- Product-Owner
-- Business-Analyst
-- Context-Manager
+### ■ 制御レイヤー
+
+| 日本版 | 本家対応 | 役割 |
+|---|---|---|
+| Orchestrator | Orchestrator | タスク分解、委譲、全体制御、quality gate挿入 |
+| Context Manager | Context Manager | 記憶管理、ログ、handoff情報管理 |
+
+---
+
+### ■ 業務実行レイヤー（統合）
+
+| 日本版 | 本家構成 | 役割 |
+|---|---|---|
+| PMO / プロジェクト管理AI | Project Manager + Product Owner + Business Analyst | 計画、優先順位、進行管理、要件整理 |
+| 設計統括AI | System Architect | 設計方針、構造定義、技術判断 |
+| ナレッジ管理AI | Knowledge系 | 情報検索、整理、再利用 |
+| 実行系AI（業務別） | 各専門Agent | 実務処理 |
+
+---
+
+## 3. 日本版で追加する機能（Agent化しない）
+
+---
+
+### ■ 完了判定機能
+
+接続先：
 - Orchestrator
-- System-Architect
+- Quality Gate
 
-### 3-2. 理由
-これらは、日本版の初期スコープである以下と接続しやすい。
-- AI社員 Spec Template 日本版
-- PMO / プロジェクト管理AI
-- 議事録→要約→タスク化AI
-- 社内FAQ・ナレッジ検索AI
-- 手順書更新AI
+役割：
+- 完了条件の確認
+- artifactの充足確認
+- 次工程への受け渡し可否判定
 
-### 3-3. 特に重要な観点
-- Project-Manager:
-  実務フロー、進行管理、タスク整理に直結する
-- Product-Owner:
-  優先順位、価値判断、スコープ整理の観点を持ち込める
-- Business-Analyst:
-  分析、評価、改善提案の視点を持ち込める
-- Context-Manager:
-  短期 / 長期 / 共有記憶、引き継ぎ、ログ設計に直結する
-- Orchestrator:
-  複数AIの役割分担と連携設計の中心になる
-- System-Architect:
-  仕様全体の構造統制と共通原則整理に有効
+判定基準：
+- 目的達成
+- 矛盾なし
+- 必須要素充足
+- 次工程で使用可能
+
+実装：
+- validation_report
+- quality gate
 
 ---
 
-## 4. 参照維持エージェント群
+### ■ 構造検証機能
 
-### 対象
-- ADR-Writer
-- ASR-Writer
-- Blueprint-Writer
-- Debugger
-- QA-Tester
-- Security-Auditor
-- UX-UI-Designer
+接続先：
+- Template Validation
+- Decomposition Validation
+- Handoff Validation
 
-### 扱い方
-- 初期から詳細テンプレート化はしない
-- ただし、設計品質を上げる参照源として使う
-- 日本版で必要になった時点で個別に取り込む
+役割：
+- 抜け漏れ検出
+- 重複検出
+- 粒度の不整合検出
 
-### 日本版への接続候補
-- ADR-Writer:
-  設計判断と意思決定ログの質向上
-- ASR-Writer:
-  要件抽出、業務要件整理
-- Blueprint-Writer:
-  実行計画、導入計画
-- Debugger:
-  失敗記録、再発防止、障害時対応
-- QA-Tester:
-  テンプレート評価、品質確認
-- Security-Auditor:
-  個人情報、監査、リスク統制
-- UX-UI-Designer:
-  出力文体、対人配慮、利用体験
+適用対象：
+- 要件
+- タスク分解
+- handoff context
+
+※ 全文書への一律適用はしない
 
 ---
 
-## 5. 後段候補エージェント群
+### ■ 日本版 HITL 制御
 
-### 対象
-- Backend-Engineer
-- Cloud-Architect
-- Code-Reviewer
-- DevOps-Engineer
-- Frontend-Engineer
-- Performance-Engineer
-- SRE
+接続先：
+- NotifyHuman
+- Orchestrator
 
-### 扱い方
-- 本家参照は保持する
-- 日本版初期では深追いしない
-- 実装寄りの展開やPoCが進んだ段階で再検討する
+役割：
+- 人間呼び出し条件の制御
 
-### 理由
-これらは重要ではあるが、
-現在の日本版プロジェクトが優先する「横断型の業務テンプレート整備」と比べると、
-やや実装・運用基盤寄りであるため、初期優先度を下げる。
+人間の役割：
+- 方針判断
+- 例外承認
+- HITL責任
 
 ---
 
-## 6. 日本版での再編イメージ
+### ■ 日本版業務プロトコル
 
-### 本家の1:1対応にしない
-日本版では、本家エージェント名をそのまま全部残す必要はない。
-むしろ、以下のように再編する可能性がある。
-
-- Project-Manager + Product-Owner + Business-Analyst
-  → PMO / プロジェクト管理AI
-- Context-Manager + Orchestrator
-  → AI社員共通基盤 / 連携統制仕様
-- ASR-Writer + Blueprint-Writer
-  → 要件整理 / 導入設計テンプレート
-- Security-Auditor + QA-Tester
-  → 監査 / 品質確認 / リスク統制テンプレート
-
-### 日本版独自の追加候補
-- 稟議ドラフトAI
-- 議事録→要約→タスク化AI
-- 情シス受付・一次対応AI
-- 社内FAQ・ナレッジ検索AI
-- 手順書更新AI
+例：
+- 稟議プロトコル
+- 承認フロー
+- 社内報告プロトコル
 
 ---
 
-## 7. 現時点の判断
-- 本家の20本はすべて重要だが、初期に同じ重さで扱わない
-- 日本版では、管理・分析・記憶・統制・連携に寄るエージェントを先に参照する
-- 実装寄りのエージェントは後段へ回す
-- 日本版は本家の完全複製ではなく、再編を前提に進める
+## 4. 機能接続構造
+
+Orchestrator
+- Delegation
+- Handoff
+- Quality Gate（完了判定）
+- Validation（構造検証）
+- NotifyHuman（HITL）
+- Context Manager
+
+Context Manager
+- Short-term memory
+- Long-term memory
+- Shared memory
+- Handoff data
+
+各業務AI
+- タスク実行
+- artifact生成
+- validation対象
 
 ---
 
-## 8. 次にやること
-- 完了判定役と構造検証役を、本家役割群とどう接続するか整理する
-- 初期優先エージェント6本を、反復協働前提でどう再編するか検討する
-- 日本版の初期テンプレートとどう結びつくかを整理する
-- 本家20本のうち、先に読む順番を決める
+## 5. 設計原則
+
+- Agentを増やさない（機能はProtocolで実装）
+- 会話に依存しない（artifact + protocolで反復）
+- 完了は構造で決まる（自己申告禁止）
+- 人間は例外責任のみ
 
 ---
 
-## 追記：公式エージェント群の見方の補強
+## 6. 次アクション
 
-本家の公式エージェント群は、単独で完結する担当者一覧としてではなく、
-役割分担しながら反復協働する設計要素として読む必要がある。
-
-日本版では、各エージェントを比較する際に以下を確認する。
-- 誰と対話するか
-- 何を叩き台として出すか
-- 誰が構造を検証するか
-- 誰が完了を判定するか
-- 人間に上げる条件は何か
-
+- 本家エージェントの責務分解
+- 日本版再編の確定
+- 各AIテンプレート作成
+- 日本版プロトコル設計
