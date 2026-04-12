@@ -1,0 +1,16 @@
+﻿# Obsidian cache / temporary files
+.DS_Store
+.trash/
+.cache/
+workspace.json
+workspace-mobile.json
+.ionos/
+snapshots/
+
+# Windows
+Thumbs.db
+desktop.ini
+
+# Optional: local logs or exports you don't want tracked
+08_exports/*.zip
+08_exports/*.pdf
